@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 
 @Component({
@@ -12,21 +12,46 @@ export class AppComponent implements OnInit {
   signupForm: FormGroup;
   forbiddenUsernames = ["Chris", "Anna"];
 
+  constructor(private formBuilder: FormBuilder) {}
+
   ngOnInit(): void {
     this.signupForm = new FormGroup({
-      userData: new FormGroup({
-        username: new FormControl(null, [
+      'userData': new FormGroup({
+        'username': new FormControl(null, [
           Validators.required,
           this.forbiddenNames.bind(this),
         ]),
-        email: new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails),
+        'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails),
       }),
-      gender: new FormControl("male"),
-      hobbies: new FormArray([]),
+      'gender': new FormControl("male"),
+      'hobbies': new FormArray([])
     }); // this is our first basic form created programmatically.!
+
+
+//      this.signupForm.valueChanges.subscribe(
+// (value)=> console.log(value)
+// );
+     this.signupForm.statusChanges.subscribe(
+(status)=> console.log(status)
+);
+// this.signupForm.setValue({
+//   'userData': {
+//     'username': 'Paul',
+//     'email': "Paul@test.com"
+//   },
+//   'gender': 'male',
+//   'hobbies': []
+// })
+this.signupForm.patchValue({
+  'userData': {
+    'username': 'Paul',
+   }})
+
+
   }
   onSubmit() {
     console.log(this.signupForm);
+    this.signupForm.reset();
   }
   getControls() {
     return (<FormArray>this.signupForm.get("hobbies")).controls;
