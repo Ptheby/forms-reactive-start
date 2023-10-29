@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-root",
@@ -12,9 +12,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
-      'username': new FormControl("Default Username"), // this is creating controls and their default values which can also be null in my new formgroup
-      'email': new FormControl(null),
+      'username': new FormControl(null, Validators.required), // this is creating controls and their default values which can also be null in my new formgroup
+      'email': new FormControl(null,[Validators.required,Validators.email]),
       'gender': new FormControl('male')
     }); // this is our first basic form created programmatically.!
+  }
+  onSubmit() {
+    console.log(this.signupForm)
   }
 }
