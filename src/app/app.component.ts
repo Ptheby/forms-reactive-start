@@ -12,8 +12,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
-      'username': new FormControl(null, Validators.required), // this is creating controls and their default values which can also be null in my new formgroup
-      'email': new FormControl(null,[Validators.required,Validators.email]),
+      'userData': new FormGroup({
+        'username': new FormControl(null, Validators.required),
+        'email': new FormControl(null,[Validators.required,Validators.email])
+      })
+     ,
       'gender': new FormControl('male')
     }); // this is our first basic form created programmatically.!
   }
